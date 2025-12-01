@@ -33,23 +33,33 @@ Este repositorio contiene el desarrollo de una aplicación web con arquitectura 
      │   └─ auth.controller.ts
      ├─ entities
      │   └─ User.ts
+     ├─ middlewares
+     │   └─ auth.middleware.ts
+     │   └─ isAdmin.middleware.ts
      ├─ routes
      │   └─ auth.routes.ts
      ├─ scripts
      │   └─ createAdmin.ts # Script para crear admin desde consola
+     ├─ types
+     │   └─ auth.request.ts #
      └─ index.ts
 
 /frontend
  └─ src
      ├─ pages
      │   └─ Login.tsx
-     └─ services
-         └─ api.ts
+     ├─ components
+     │   └─ .tsx
+     ├─ context
+     │   └─ .tsx
+     ├─ services
+     │   └─ api.tsx # Conexión al backend
+     └─ App.tsx
 ```
 
 # Comandos de inicialización/creación del proyecto
 
-Creación de carpeta BACKEND por comandos y entrar a la misma:
+## Creación de carpeta BACKEND por comandos y entrar a la misma:
 
 ```bash
 mkdir backend; cd backend
@@ -84,6 +94,39 @@ Luego, en el tsconfig.json se deben habilitar:
 ```bash
 "experimentalDecorators": true
 "emitDecoratorMetadata": true
+```
+
+## Creación carpeta FRONTEND por comandos y entrar a la misma
+
+```bash
+npm create vite@latest frontend
+```
+
+No olvidar selecionar los siguientes en la instalación:
+
+```bash
+Framework → React
+Variant → TypeScript
+```
+
+Entrar carpeta y hacer las respectivas instalaciones:
+
+```bash
+cd frontend
+npm install
+```
+
+instalaciones
+```bash
+npm install axios
+
+npm install axios react-router-dom
+npm install lucide-react
+
+npm install -D @types/react-router-dom
+
+npm install lucide-react
+
 ```
 
 # Comandos de ejecución
