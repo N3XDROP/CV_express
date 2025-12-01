@@ -1,0 +1,116 @@
+/* ===========================
+   Tokens base (no cambian)
+=========================== */
+:root {
+  /* Paleta SumerTIC */
+  --pri: #01D37C;
+  --pri-2: #00D279;
+  --pri-3: #1DD78A;
+  --sec: #015351;
+  --sec-2: #077F75;
+  --sec-3: #175F60;
+  --white: #FFFFFF;
+  --mobile-item-hover-bg: rgba(0,0,0,0.06); /* hover en modo claro */
+
+  /* Hint para controles nativos */
+  color-scheme: light dark;
+}
+
+/* =========================================
+   Variables de tema (por defecto: LIGHT)
+   * Siempre usa SOLO variables abajo
+========================================= */
+html {
+  /* Light por defecto */
+  --bg: var(--sec-2);        /* Superficies: navbar/menús */
+  --bg-light: #f9f9f9;       /* Fondo general */
+  --text: #0b1f1f;           /* Texto base */
+  --card-bg: #fff;
+  --card-border: #e8eeee;
+  --btn-bg: var(--pri);
+  --link: #ffffff;
+  --link-hover: var(--sec);
+  --toggle: var(--sec);
+  color-scheme: light;
+}
+
+/* Sistema: aplica DARK si el usuario NO ha forzado tema */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --bg: #202b2b;
+    --bg-light: #181c1d;
+    --text: rgba(255,255,255,0.92);
+    --card-bg: #111718;
+    --card-border: #203132;
+    --btn-bg: var(--pri-2);
+    --link: #ffffff;
+    --link-hover: var(--pri-3);
+    --toggle: var(--pri-2);
+    color-scheme: dark;
+  }
+}
+
+/* Overrides explícitos (botón/usuario) */
+html[data-theme="light"] {
+  --bg: var(--sec-2);
+  --bg-light: #f9f9f9;
+  --text: #0b1f1f;
+  --card-bg: #fff;
+  --card-border: #e8eeee;
+  --btn-bg: var(--pri);
+  --link: #ffffff;
+  --link-hover: var(--sec-3);
+  --toggle: var(--sec);
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  --bg: #202b2b;
+  --bg-light: #111718;
+  --text: rgba(255,255,255,0.92);
+  --card-bg: #111718;
+  --card-border: #203132;
+  --btn-bg: var(--pri-2);
+  --link: #ffffff;
+  --link-hover: var(--pri-3);
+  --toggle: var(--pri-2);
+   --mobile-item-hover-bg: rgba(255,255,255,0.06); /* hover en modo oscuro */
+  color-scheme: dark;
+}
+
+/* ===== Reset mínimo / base ===== */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  background: var(--bg-light);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; height: auto; }
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1em;
+  font: inherit;
+  background: var(--btn-bg);
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.15s, border-color 0.2s;
+}
+button:hover { filter: brightness(0.95); }
+
+/* Contenedor */
+.container { max-width: 1180px; padding: 0 16px; margin: 0 auto; }
+
+/* Helpers */
+.muted { color: #5a6a6a; }
+.card {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--card-bg);
+}
