@@ -12,11 +12,10 @@ import {
 import { IsEmail, Length } from "class-validator";
 import * as bcrypt from "bcrypt";
 
-/** Roles del sistema */
+// Roles de usuario
 export enum UserRole {
-  admin = "1",
   user = "0",
-  comite = "2",
+  admin = "1"
 }
 
 @Entity({ name: "users" })
@@ -31,6 +30,9 @@ export class User {
 
   @Column({ length: 150 })
   name!: string;
+
+  @Column({ length: 150 })
+  lastName!: string;
 
   @Column({
     type: "enum",

@@ -15,6 +15,7 @@ const createAdmin = async () => {
 
     const email = readline.questionEMail("Email: ");
     const name = readline.question("Name: ");
+    const lastName = readline.question("LastName: ");
     const password = readline.question("Password (minimo 8 caracteres): ", {
       hideEchoBack: true,
     });
@@ -22,16 +23,18 @@ const createAdmin = async () => {
     console.log("\nSelecciona rol:");
     console.log("0 → Usuario");
     console.log("1 → Admin");
-    console.log("2 → Comité");
 
-    const roleInput = readline.question("\nRol (1/0/2) [default: 1]: ");
+    const roleInput = readline.question("\nRol (1/0) [default: 1]: ");
 
-    const role =
-      roleInput === "0"
-        ? UserRole.user
-        : roleInput === "2"
-        ? UserRole.comite
-        : UserRole.admin;
+    let role: UserRole;
+
+    if (roleInput === "1") {
+      role = UserRole.admin;
+    } else if (roleInput === "0") {
+      role = UserRole.user;
+    } else {
+      throw new Error("Rol inválido");
+    }
 
     const exists = await userRepository.findOne({
       where: { email },
@@ -45,6 +48,7 @@ const createAdmin = async () => {
     const user = new User();
     user.email = email;
     user.name = name;
+    user.lastName = lastName;
     user.password = password; // se encripta automático
     user.role = role;
 
@@ -54,6 +58,7 @@ const createAdmin = async () => {
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━");
     console.log(`📧 Email: ${email}`);
     console.log(`👤 Nombre: ${name}`);
+    console.log(`👤 Apellido: ${lastName}`);
     console.log(`🛡 Rol: ${role}`);
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 

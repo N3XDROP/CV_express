@@ -7,7 +7,7 @@ const DB_TYPE = process.env.DB_TYPE;
 
 let AppDataSource: DataSource;
 
-// ✅ MYSQL (XAMPP)
+// MYSQL (XAMPP)
 if (DB_TYPE === "mysql") {
   console.log("🟡 Usando base de datos MYSQL (XAMPP)");
 
@@ -24,7 +24,7 @@ if (DB_TYPE === "mysql") {
   });
 }
 
-// ✅ SUPABASE (POSTGRES)
+// SUPABASE (POSTGRES)
 else if (DB_TYPE === "supabase") {
   console.log("🟢 Usando base de datos SUPABASE (Postgres)");
 
