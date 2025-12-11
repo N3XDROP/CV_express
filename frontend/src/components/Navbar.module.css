@@ -1,0 +1,84 @@
+.nav {
+  /* Barra de navegación superior
+     - Layout: horizontal con gaps entre elementos
+     - Background y color del texto usan variables del tema global
+  */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg);
+  color: var(--link);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--link);
+  text-decoration: none;
+}
+
+.links {
+  /* Grupo de enlaces a la derecha */
+  margin-left: auto; /* empuja los links al extremo derecho */
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.link {
+  color: var(--link);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.link:hover { background: var(--mobile-item-hover-bg); }
+
+.adminLink {
+  /* Estilo especial para enlace de Dashboard (solo visible a admins)
+     - Cambiar background o border para enfatizar privilegios.
+  */
+  color: var(--link);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+}
+
+.btn {
+  /* Botón de cerrar sesión estilizado para que combine con navbar */
+  background: transparent;
+  color: var(--link);
+  border: 1px solid transparent;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(0.92); }
+
+@media (max-width: 600px) {
+  .nav { padding: 0.6rem; }
+  .links { gap: 0.6rem; }
+}
+
+/* Responsive: tablets y móviles
+   - En pantallas pequeñas permitimos que la barra haga wrap y los links
+     ocupen toda la fila para facilitar el acceso táctil.
+*/
+@media (max-width: 420px) {
+  .nav { padding: 0.5rem; flex-wrap: wrap; }
+  .brand { flex-basis: 100%; }
+  .links { margin-left: 0; width: 100%; justify-content: space-between; }
+  .link, .adminLink, .btn { padding: 8px 10px; }
+}
+
+/* Desktop grande y TVs: mayor espaciado y tamaño de letra */
+@media (min-width: 1200px) {
+  .nav { padding: 1.25rem 2rem; }
+  .link, .adminLink, .btn { padding: 8px 12px; }
+}
+
+@media (min-width: 1600px) {
+  .nav { padding: 1.5rem 3rem; }
+  .brand { font-size: 1.15rem; }
+}
