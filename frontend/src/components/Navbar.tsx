@@ -1,42 +1,40 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const { token, user, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.clear();
+    logout();
     navigate("/login");
   };
 
   return (
-    <nav
-      style={{
-        padding: "1rem",
-        background: "#0f172a",
-        display: "flex",
-        gap: "1rem",
-        color: "white",
-      }}
-    >
-      <Link to="/">Home</Link>
+    <nav className={styles.nav}>
+      <Link to="/" className={styles.brand}>
+        Home
+      </Link>
 
-      {/* SOLO ADMIN ve Dashboard */}
-      {token && user?.role === "1" && (
-        <Link
-          to="/dashboard"
-          style={{ color: "white", textDecoration: "none" }}
-        >
-          Dashboard
-        </Link>
-      )}
+      <div className={styles.links}>
+        {/* SOLO ADMIN ve Dashboard */}
+        {token && user?.role === "1" && (
+          <Link to="/dashboard" className={styles.adminLink}>
+            Dashboard
+          </Link>
+        )}
 
-      {token ? (
-        <button onClick={handleLogout}>Cerrar sesión</button>
-      ) : (
-        <Link to="/login">Login</Link>
-      )}
+        {token ? (
+          <button className={styles.btn} onClick={handleLogout}>
+            Cerrar sesión
+          </button>
+        ) : (
+          <Link to="/login" className={styles.link}>
+            Login
+          </Link>
+        )}
+      </div>
     </nav>
   );
 }

@@ -1,10 +1,18 @@
+/* Contenedor de la vista de login
+   - Centra vertical y horizontalmente el formulario.
+   - Background claro para dar contraste con la tarjeta del formulario.
+*/
 .container {
-  min-height: 100vh;
+  min-height: 100vh; /* ocupa toda la altura de la ventana */
   display: grid;
-  place-items: center;
-  background: #f5f5f5;
+  place-items: center; /* centra el contenido */
+  background: #f5f5f5; /* color de fondo de la pantalla de login */
 }
 
+/* Tarjeta del formulario
+   - Define el ancho máximo y la apariencia (fondo, borde, padding).
+   - Modificar `max-width` cambia la anchura del formulario en pantallas grandes.
+*/
 .card {
   width: 100%;
   max-width: 380px;
@@ -14,26 +22,36 @@
   border: 1px solid #ddd;
 }
 
-/* Título */
-.hero {
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: 600;
+/* Responsive: ajustar tamaño de la tarjeta y espaciados en móviles */
+@media (max-width: 420px) {
+  .card { max-width: 340px; padding: 18px; }
+  .title { font-size: 20px; }
+  .input { padding: 10px 34px; font-size: 14px; }
+  .button { padding: 10px; font-size: 14px; }
 }
 
-.title {
-  font-size: 22px;
-  font-weight: 600;
-  color: #111;
+@media (min-width: 900px) {
+  /* Tablets y desktop: agrandar inputs para mejor legibilidad */
+  .card { max-width: 460px; padding: 28px; }
+  .title { font-size: 24px; }
+  .input { font-size: 16px; padding: 12px 44px; }
+  .button { padding: 14px; font-size: 16px; }
 }
 
-/* Grupo de input */
-.group {
-  margin-bottom: 16px;
-  position: relative;
-}
+/* Elementos de texto del header del formulario */
+.hero { text-align: center; margin-bottom: 20px; font-weight: 600; }
+.title { font-size: 22px; font-weight: 600; color: #111; }
 
-/* Input base */
+/* Agrupador de inputs
+   - `position: relative` permite colocar iconos absolutos dentro del grupo.
+*/
+.group { margin-bottom: 16px; position: relative; }
+
+/* Input base
+   - Padding deja espacio para iconos laterales (38px)
+   - Bordes y radios definidos para apariencia consistente.
+   - Cambiar `padding` o `font-size` modifica el tamaño visual del control.
+*/
 .input {
   width: 100%;
   padding: 10px 38px;
@@ -43,62 +61,37 @@
   background: #fff;
   color: #111;
 }
+.input::placeholder { color: #999; }
+.input:focus { outline: none; border-color: #000; }
 
-.input::placeholder {
-  color: #999;
-}
-
-/* Cuando se selecciona */
-.input:focus {
-  outline: none;
-  border-color: #000;
-}
-
-/* Icono a la izquierda */
+/* Icono a la izquierda dentro del input */
 .leftIcon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
   color: #333;
 }
 
-/* Botón mostrar/ocultar contraseña */
+/* Toggle mostrar/ocultar contraseña
+   - Botón transparente posicionado a la derecha del input.
+*/
 .toggle {
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #333;
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: #333;
 }
 
-/* Botón principal */
+/* Botón principal de envío
+   - Ancho completo para facilitar interacción móvil.
+   - Color negro por defecto (puedes usar `var(--btn-bg)` si quieres tema).
+*/
 .button {
-  width: 100%;
-  padding: 12px;
-  background: black;
-  color: white;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  margin-top: 5px;
+  width: 100%; padding: 12px; background: black; color: white;
+  border-radius: 8px; border: none; cursor: pointer; font-size: 15px; margin-top: 5px;
 }
+.button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Mensaje de error */
+/* Mensaje de error
+   - Fondo suave en rojo y texto oscuro para visibilidad inmediata.
+*/
 .message {
-  background: #fee;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #800;
+  background: #fee; padding: 10px; border-radius: 6px; margin-bottom: 12px;
+  font-size: 14px; color: #800;
 }

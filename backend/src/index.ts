@@ -6,16 +6,30 @@ import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
+// CORS: allow frontend origin from env or fallback
 app.use(
   cors({
-    origin: "http://localhost:5173", // URL React
-    credentials: true,
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    // credentials: true, // enable only if you use cookies (httpOnly)
   })
 );
 
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+
+if (!process.env.JWT_SECRET) {
+  console.error("❌ JWT_SECRET no definido en .env");
+  process.exit(1);
+}
+if (!process.env.DB_TYPE) {
+  console.error("❌ DB_TYPE no definido en .env");
+  process.exit(1);
+}
+if (!process.env.FRONTEND_URL) {
+  console.error("❌ FRONTEND_URL no definido en .env");
+  process.exit(1);
+}
 
 AppDataSource.initialize()
   .then(() => {

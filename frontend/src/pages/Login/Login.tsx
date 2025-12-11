@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Mail, Lock, LogIn, Eye, EyeOff } from "lucide-react";
 import api from "../../services/api";
 import styles from "./Login.module.css";
+import { useAuth } from "../../contexts/AuthContext";
+import type { User } from "../../types/user";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,8 +30,9 @@ export default function Login() {
 
       const { data } = await api.post("/auth/login", { email, password });
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // save to auth context (and context persists to localStorage)
+      const usr = data.user as User;
+      login(data.token, usr);
 
       navigate("/", { replace: true });
     } catch (err: any) {

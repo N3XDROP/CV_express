@@ -1,5 +1,9 @@
 /* ===========================
-   Tokens base (no cambian)
+  Tokens base (no cambian)
+  - Definen colores y variables globales reutilizables.
+  - Estas variables son la base del diseño (paleta) y no deberían
+    cambiarse en componentes; se usan en temas/overrides más abajo.
+  - Alterar una variable aquí afecta toda la UI que la referencia.
 =========================== */
 :root {
   /* Paleta SumerTIC */
@@ -18,7 +22,12 @@
 
 /* =========================================
    Variables de tema (por defecto: LIGHT)
-   * Siempre usa SOLO variables abajo
+   - Aquí se definen variables dependientes del tema (colores de fondo,
+     texto, tarjetas, botones, etc.).
+   - Cambiar estas variables ajusta el 'look & feel' de toda la app
+     sin tocar reglas específicas de componentes.
+   - Nota: los componentes deben usar solo estas variables para ser
+     compatibles con temas claro/oscuro.
 ========================================= */
 html {
   /* Light por defecto */
@@ -77,34 +86,72 @@ html[data-theme="dark"] {
   color-scheme: dark;
 }
 
-/* ===== Reset mínimo / base ===== */
+/* ===== Reset mínimo / base =====
+  - Reglas globales para consistencia entre navegadores.
+  - Afectan tipografía, caja y el fondo general.
+*/
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
 body {
-  margin: 0;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  background: var(--bg-light);
-  color: var(--text);
+  margin: 0; /* elimina márgenes por defecto del navegador */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* stack legible */
+  line-height: 1.5; /* mejora legibilidad en textos largos */
+  background: var(--bg-light); /* color de fondo controlado por tema */
+  color: var(--text); /* color de texto según tema */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; height: auto; }
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1em;
-  font: inherit;
-  background: var(--btn-bg);
-  color: #fff;
+  border-radius: 8px; /* esquinas suaves en botones */
+  border: 1px solid transparent; /* permite animar borde si es necesario */
+  padding: 0.6em 1em; /* tamaño cómodo para clics táctiles */
+  font: inherit; /* hereda fuente del body */
+  background: var(--btn-bg); /* color principal configurable por tema */
+  color: #fff; /* texto del botón siempre visible */
   cursor: pointer;
-  transition: filter 0.15s, border-color 0.2s;
+  transition: filter 0.15s, border-color 0.2s; /* micro interacciones suaves */
 }
 button:hover { filter: brightness(0.95); }
 
-/* Contenedor */
+/* Contenedor
+   - Limita el ancho del contenido central y añade padding lateral.
+   - Usar la clase `.container` en componentes alinea el contenido con
+     el grid principal de la app.
+*/
 .container { max-width: 1180px; padding: 0 16px; margin: 0 auto; }
+
+/* Responsive breakpoints
+   - Estas medias cubren la mayoría de dispositivos: móviles, tablets,
+     laptops, pantallas grandes y TVs. Ajusta los valores si necesitas
+     soportar tamaños específicos.
+*/
+@media (max-width: 600px) {
+  /* Móviles pequeños: reduce el ancho contenido y padding */
+  .container { max-width: 100%; padding: 0 12px; }
+  html { --btn-bg: var(--pri); }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  /* Tablets / iPad portrait */
+  .container { max-width: 720px; padding: 0 16px; }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  /* Laptops / iPad landscape */
+  .container { max-width: 960px; }
+}
+
+@media (min-width: 1201px) and (max-width: 1600px) {
+  /* Desktop */
+  .container { max-width: 1180px; }
+}
+
+@media (min-width: 1601px) {
+  /* Large screens / TV: permitir más anchura y mayor espacio */
+  .container { max-width: 1400px; }
+}
 
 /* Helpers */
 .muted { color: #5a6a6a; }
