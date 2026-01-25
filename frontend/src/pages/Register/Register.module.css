@@ -157,20 +157,20 @@
   color: #800;
 }
 
-.registerText {
+.loginText {
   margin-top: 12px;
   text-align: center;
   font-size: 0.9rem;
   color: #555;
 }
 
-.registerLink {
+.loginLink {
   color: #007bff;
   cursor: pointer;
   font-weight: 500;
 }
 
-.registerLink:hover {
+.loginLink:hover {
   text-decoration: underline;
 }
 

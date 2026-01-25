@@ -1,47 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import styles from "./Dashboard.module.css";
-import type { User } from "../../types/user";
-
-function getRoleLabel(role: string): string {
-  return role === "1" ? "Admin" : "Usuario";
-}
-
-function formatDate(dateString?: string): string {
-  if (!dateString) return "Fecha no disponible";
-
-  const date = new Date(dateString);
-  return date.toLocaleDateString("es-CO", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-}
-
-function formatTime(dateString?: string): string {
-  if (!dateString) return "Hora no disponible";
-
-  const date = new Date(dateString);
-  return date.toLocaleTimeString("es-CO", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true, // Para AM/PM
-  });
-}
-
-function formatDateTime(dateString?: string): string {
-  if (!dateString) return "Fecha no disponible";
-
-  const date = new Date(dateString);
-  return date.toLocaleString("es-CO", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-}
+import { ROLE_LABELS, type User } from "../../types/user";
+import { formatDate, formatDateTime, formatTime } from "../../utils/date";
 
 export default function Dashboard() {
   const [users, setUsers] = useState<User[]>([]);
@@ -100,7 +61,7 @@ export default function Dashboard() {
               <p>Creado A las: {formatTime(user.createdAt)}</p>
               <p>Fecha Creación: {formatDateTime(user.createdAt)}</p>
 
-              <small>Rol: {getRoleLabel(user.role)}</small>
+              <small>Rol: {ROLE_LABELS[user.role]}</small>
             </div>
           ))}
         </div>

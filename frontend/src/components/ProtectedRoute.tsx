@@ -13,8 +13,13 @@ export default function ProtectedRoute({ children, requiredRole }: Props) {
   if (!token) return <Navigate to="/login" replace />;
 
   if (requiredRole && user?.role !== requiredRole) {
-    // If user is authenticated but not authorized, redirect to home
-    return <Navigate to="/" replace />;
+    return (
+      <Navigate
+        to="/"
+        replace
+        state={{ error: "No tienes permisos para acceder a esta sección" }}
+      />
+    );
   }
 
   return children;

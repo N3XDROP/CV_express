@@ -5,6 +5,9 @@ import MainLayout from "./components/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import PublicRoute from "./components/PublicRoute";
+import { UserRole } from "./types/user";
+import { Register } from "./pages/Register/Register";
+import { RegisterUser } from "./pages/Register/RegisterUser";
 
 function App() {
   return (
@@ -20,22 +23,34 @@ function App() {
           }
         />
 
+        {/* SIN NAVBAR */}
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
         {/* CON NAVBAR */}
         <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+
           <Route
-            path="/"
+            path="/dashboard"
             element={
-              <ProtectedRoute>
-                <Home />
+              <ProtectedRoute requiredRole={UserRole.admin}>
+                <Dashboard />
               </ProtectedRoute>
             }
           />
 
           <Route
-            path="/dashboard"
+            path="/registerUser"
             element={
-              <ProtectedRoute requiredRole="1">
-                <Dashboard />
+              <ProtectedRoute requiredRole={UserRole.admin}>
+                <RegisterUser />
               </ProtectedRoute>
             }
           />

@@ -18,16 +18,23 @@
 }
 
 .userCard {
-  /* Tarjeta pequeña que muestra información del usuario
-     - Similar a .card global, pero con ajustes para este layout.
-     - Cambiar `border-radius` o `box-shadow` altera la forma visual.
-  */
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
+  margin-top: 20px;
   display: inline-block;
   text-align: left;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.line {
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+.role {
+  color: #2563eb;
 }
 
 .meta {
@@ -41,29 +48,59 @@
      - Útil para debug o mostrar el usuario crudo.
      - Mantener `white-space: pre-wrap` para evitar overflow horizontal.
   */
-  background: rgba(0,0,0,0.03);
+  background: rgba(0, 0, 0, 0.03);
   padding: 12px;
   border-radius: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New",
+    monospace;
   font-size: 0.9rem;
   white-space: pre-wrap;
 }
 
+.errorMessage {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
 /* Responsive: ajustar padding y tamaños en móviles y tablets */
 @media (max-width: 480px) {
-  .root { padding: 1rem; }
-  .welcome { font-size: 1.4rem; }
-  .userCard { width: 100%; padding: 12px; }
-  .pre { font-size: 0.8rem; }
+  .root {
+    padding: 1rem;
+  }
+  .welcome {
+    font-size: 1.4rem;
+  }
+  .userCard {
+    width: 100%;
+    padding: 12px;
+  }
+  .pre {
+    font-size: 0.8rem;
+  }
 }
 
 @media (min-width: 900px) {
-  .root { padding: 3rem; }
-  .welcome { font-size: 2.1rem; }
-  .userCard { padding: 20px; }
+  .root {
+    padding: 3rem;
+  }
+  .welcome {
+    font-size: 2.1rem;
+  }
+  .userCard {
+    padding: 20px;
+  }
 }
 
 @media (min-width: 1600px) {
-  .root { max-width: 1400px; }
-  .welcome { font-size: 2.4rem; }
+  .root {
+    max-width: 1400px;
+  }
+  .welcome {
+    font-size: 2.4rem;
+  }
 }

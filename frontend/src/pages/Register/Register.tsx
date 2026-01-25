@@ -1,54 +1,50 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Mail, Lock, LogIn, Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Mail, Lock, Save, Eye, EyeOff, PersonStanding } from "lucide-react";
 import api from "../../services/api";
-import styles from "./Login.module.css";
-import { useAuth } from "../../context/AuthContext";
-import type { User } from "../../types/user";
+import styles from "./Register.module.css";
 
-export default function Login() {
+export function Register() {
   const navigate = useNavigate();
-  const { login } = useAuth();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const location = useLocation();
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (location.state?.success) {
-      setSuccess(location.state.success);
-
-      // Limpia el state para que no reaparezca al refrescar
-      navigate(location.pathname, { replace: true });
-    }
-  }, [location, navigate]);
-
-  async function handleLogin(e: React.FormEvent) {
+  async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!email || !password || !name || !lastName) {
       setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres");
       return;
     }
 
     try {
       setLoading(true);
       setError("");
+      await api.post("/auth/register", {
+        email,
+        password,
+        name,
+        lastName,
+      });
 
-      const { data } = await api.post("/auth/login", { email, password });
-
-      // save to auth context (and context persists to localStorage)
-      const usr = data.user as User;
-      login(data.token, usr);
-
-      navigate("/", { replace: true });
+      navigate("/login", {
+        replace: true,
+        state: {
+          success: "Cuenta creada correctamente. Ahora puedes iniciar sesión.",
+        },
+      });
     } catch (err: any) {
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+      setError(err.response?.data?.message || "Error al registrarse");
     } finally {
       setLoading(false);
     }
@@ -56,13 +52,38 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <form className={styles.card} onSubmit={handleLogin}>
+      <form className={styles.card} onSubmit={handleRegister}>
         <div className={styles.hero}>
-          <h2 className={styles.title}>Iniciar sesión</h2>
+          <h2 className={styles.title}>Registrarse</h2>
         </div>
 
         {error && <div className={styles.message}>{error}</div>}
-        {success && <div className={styles.success}>{success}</div>}
+
+        {/* NAME */}
+        <div className={styles.group}>
+          <PersonStanding className={styles.leftIcon} size={18} />
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Nombre"
+            value={name}
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        {/* LASTNAME */}
+        <div className={styles.group}>
+          <PersonStanding className={styles.leftIcon} size={18} />
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Apellido"
+            value={lastName}
+            required
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
 
         {/* EMAIL */}
         <div className={styles.group}>
@@ -72,6 +93,7 @@ export default function Login() {
             type="email"
             placeholder="Correo"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -84,6 +106,8 @@ export default function Login() {
             type={showPass ? "text" : "password"}
             placeholder="Contraseña"
             value={password}
+            minLength={8}
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
 
@@ -102,21 +126,21 @@ export default function Login() {
             "Cargando.."
           ) : (
             <>
-              <LogIn size={18} /> Entrar
+              <Save size={18} /> Registrarse
             </>
           )}
         </button>
 
         {/* LINK A REGISTRO */}
-        <p className={styles.registerText}>
-          ¿No tienes cuenta?{" "}
+        <p className={styles.loginText}>
+          ¿Ya estás registrado?{" "}
           <span
-            className={styles.registerLink}
-            onClick={() => navigate("/register")}
+            className={styles.loginLink}
+            onClick={() => navigate("/login")}
             role="button"
             tabIndex={0}
           >
-            Regístrate
+            Logueate
           </span>
         </p>
 

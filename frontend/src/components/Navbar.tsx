@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import styles from "./Navbar.module.css";
+import { UserRole } from "../types/user";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -19,9 +20,16 @@ export default function Navbar() {
 
       <div className={styles.links}>
         {/* SOLO ADMIN ve Dashboard */}
-        {token && user?.role === "1" && (
+        {token && user?.role === UserRole.admin && (
           <Link to="/dashboard" className={styles.adminLink}>
             Dashboard
+          </Link>
+        )}
+
+        {/* SOLO ADMIN ve RegisterUser */}
+        {token && user?.role === UserRole.admin && (
+          <Link to="/registerUser" className={styles.adminLink}>
+            RegistrarUsuario
           </Link>
         )}
 
