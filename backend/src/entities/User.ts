@@ -18,6 +18,8 @@ export enum UserRole {
   admin = "1"
 }
 
+export const AVAILABLE_ROLES = Object.values(UserRole);
+
 @Entity({ name: "users" })
 export class User {
   @PrimaryGeneratedColumn()
