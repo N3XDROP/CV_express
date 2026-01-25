@@ -1,16 +1,17 @@
 import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { AuthRequest } from "../types/auth.request";
+import { UserRole } from "../entities/User";
 
 interface JwtPayload {
   id: number;
-  role: string;
+  role: UserRole;
 }
 
 export const authMiddleware = (
   req: AuthRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const authHeader = req.headers.authorization;
@@ -19,7 +20,10 @@ export const authMiddleware = (
       return res.status(401).json({ message: "Token no proporcionado" });
     }
 
-    const token = authHeader.split(" ")[1];
+    if (!authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Formato de token inválido" });
+    }
+    const [, token] = authHeader.split(" ");
 
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET no está definido");
