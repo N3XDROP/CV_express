@@ -1,173 +1,36 @@
-# Introducción
+# Aplicación Web Fullstack
 
-Este repositorio contiene el desarrollo de una aplicación web con arquitectura separada: **Express + TypeScript** para el backend y **React (Vite)** para el frontend.
+Aplicación web con autenticación y roles de usuario, desarrollada con
+**Express + TypeScript** en el backend y **React (Vite)** en el frontend.
 
-# Tecnologías usadas
+Incluye:
 
-## Backend:
+- Autenticación con JWT
+- Roles (Admin / Usuario)
+- Protección de rutas
+- Panel de administración
 
-- Node.js
-- Express.js
-- TypeScript
-- TypeORM
-- MySQL / PostgreSQL
-- bcrypt (hash de contraseñas)
-- jsonwebtoken (JWT)
-- dotenv
-- cors
+---
 
-## Frontend
+## Ejecución rápida (modo desarrollo)
 
-- React (Vite)
-- TypeScript
-- Axios
+La aplicación en local estará disponible en:
 
-# Estructura del proyecto
+- Frontend: http://localhost:5173
+- Backend: http://localhost:4000
 
-```bash
-/backend
- └─ src
-     ├─ config
-     │   └─ db.ts
-     ├─ controllers
-     │   └─ auth.controller.ts
-     ├─ entities
-     │   └─ User.ts
-     ├─ middlewares
-     │   └─ auth.middleware.ts
-     │   └─ isAdmin.middleware.ts
-     ├─ routes
-     │   └─ auth.routes.ts
-     ├─ scripts
-     │   └─ createAdmin.ts # Script para crear admin desde consola
-     ├─ types
-     │   └─ auth.request.ts #
-     └─ index.ts
-
-/frontend
- └─ src
-     ├─ pages
-     │   └─ Login.tsx
-     ├─ components
-     │   └─ .tsx
-     ├─ context
-     │   └─ .tsx
-     ├─ services
-     │   └─ api.tsx # Conexión al backend
-     └─ App.tsx
-```
-
-# Comandos de inicialización/creación del proyecto
-
-## Creación de carpeta BACKEND por comandos y entrar a la misma:
-
-```bash
-mkdir backend; cd backend
-```
-
-Inicialización de NPM:
-
-```bash
-npm init -y
-```
-
-Instalación dependencias principales:
-
-```bash
-npm install express dotenv cors mysql2 typeorm reflect-metadata bcrypt jsonwebtoken class-validator class-transformer readline-sync
-```
-
-Instalación dependencias del desarrollo:
-
-```bash
-npm install -D typescript ts-node-dev nodemon @types/node @types/express @types/cors @types/bcrypt @types/jsonwebtoken @types/readline-sync
-```
-
-Creación de tsconfig.json (Recordar modificar el contenido por uno adecuado al desarollo):
-
-```bash
-npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --allowSyntheticDefaultImports --strict
-```
-
-Luego, en el tsconfig.json se deben habilitar:
-
-```bash
-"experimentalDecorators": true
-"emitDecoratorMetadata": true
-```
-
-## Creación carpeta FRONTEND por comandos y entrar a la misma
-
-```bash
-npm create vite@latest frontend
-```
-
-No olvidar selecionar los siguientes en la instalación:
-
-```bash
-Framework → React
-Variant → TypeScript
-```
-
-Entrar carpeta y hacer las respectivas instalaciones:
-
-```bash
-cd frontend
-npm install
-```
-
-instalaciones
-```bash
-npm install axios
-
-npm install axios react-router-dom
-npm install lucide-react
-
-npm install -D @types/react-router-dom
-
-npm install lucide-react
-
-```
-
-# Comandos de ejecución
+---
 
 ## Backend
 
-Conexión a base de datos:
-
-```bash
-npm run mysql # Conexión a MYSQL (XAMPP)
-npm run sb # Conexión a PostgreSQL (Supabase)
-```
-
-## Usuarios
-
-Creación de admin por consola:
-
-```bash
-npm run create:admin
-```
-
-# Creación de .env
-
-Actualmente el proyecto cuenta con un script que permite cambiar entre bases de datos (XAMPP y Supabase) de forma sencilla; cabe recalcar que el archivo `.env` se genera automáticamente al ejecutar los scripts.  
-Los archivos `.env.mysql` y `.env.supabase` deben ser creados manualmente:
-
 ```bash
 cd backend
-type nul > .env.mysql
-type nul > .env.supabase
+npm install
 ```
 
-A continuación el contenido de ejemplo:
+### Configuración de base de datos
 
-```bash
-# Para '.env.supabase'
-DB_TYPE=supabase
-SUPABASE_URL=TU_URL_DE_SUPABASE
-SUPABASE_KEY=TU_API_KEY
-JWT_SECRET=CONTRASEÑA_SEGURA
-```
+El proyecto permite alternar entre bases de datos mediante scripts, cada comando utiliza un archivo .env distinto. Ejemplos a continuación:
 
 ```bash
 # Para '.env.mysql'
@@ -175,7 +38,56 @@ DB_TYPE=mysql
 MYSQL_HOST=localhost
 MYSQL_USER=root
 MYSQL_PASSWORD=
-MYSQL_DATABASE=NAME_DATABASE
+MYSQL_DATABASE={NameDatabase}
 MYSQL_PORT=3306
+JWT_SECRET={UnaContraseñaSecreta}
+# FRONTEND_URL=http://localhost:{PUERTO} OPCIONAL
+```
+
+```bash
+#Para '.env.supabase'
+DB_TYPE=supabase
+SUPABASE_URL=TU_URL_DE_SUPABASE
+SUPABASE_KEY=TU_API_KEY
 JWT_SECRET=CONTRASEÑA_SEGURA
+# FRONTEND_URL=http://localhost:{PUERTO} OPCIONAL
+```
+
+### Ejecutar Backend
+
+Al ejecutar el comando correspondiente, se genera automáticamente el .env principal del backend.
+
+```bash
+npm run mysql
+# o
+npm run sb
+```
+
+## Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+### Conexión al backend
+
+Crear un archivo .env indicando la IP del backend:
+
+```bash
+VITE_API_URL=http://{IP_EQUIPO}:4000/api
+```
+
+Para conocer la IP del equipo en Windows (IPv4):
+
+```bash
+ipconfig
+```
+
+### Ejecutar frontend
+
+```bash
+npm run dev
+# o para acceso desde otros dispositivos
+npm run dev -- --host
 ```
