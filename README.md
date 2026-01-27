@@ -63,6 +63,16 @@ npm run mysql
 npm run sb
 ```
 
+### Crear primer admin o usuarios en general
+Se usa un script por comando para la creación del primer admin o usuarios generales por consola, este no tiene verificación de tokens o seguridad.
+```bash
+# Ubicarse en la carpeta backend
+cd backend
+
+#Crear usuario admin
+npm run create:admin
+```
+
 ## Frontend
 
 ```bash
