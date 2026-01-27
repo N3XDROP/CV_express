@@ -9,6 +9,7 @@ const app = express();
 // CORS: allow frontend origin from env or fallback
 app.use(
   cors({
+    //origin: process.env.FRONTEND_URL, //Opcional si se usa una ruta por .env
     origin: true,
   })
 );
